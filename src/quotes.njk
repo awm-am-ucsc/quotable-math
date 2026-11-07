@@ -1,0 +1,20 @@
+---
+permalink: /quotes/
+title: All quotes about mathematics
+description: Browse and search every quote in the archive, from women and underrepresented mathematicians and STEM practitioners.
+---
+{% extends "base.njk" %}
+{% from "quote.njk" import quoteCard %}
+{% block content %}
+<h1>All quotes</h1>
+<form class="search" role="search" onsubmit="return false">
+  <label class="visually-hidden" for="filter">Filter quotes</label>
+  <input id="filter" type="search" placeholder="Search" autocomplete="off">
+</form>
+<p class="count" id="count" aria-live="polite">{{ archive.quotes.length }} quotes</p>
+<div class="quote-list" id="quotes">
+  {%- for q in archive.quotes %}{{ quoteCard(q) }}{% endfor %}
+</div>
+<p class="empty" id="empty" hidden>No quotes match. <a href="/about/#contribute">Know a good one? Suggest it.</a></p>
+<script src="/assets/search.js" defer></script>
+{% endblock %}

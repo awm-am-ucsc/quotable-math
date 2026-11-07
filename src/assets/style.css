@@ -1,0 +1,138 @@
+:root {
+  --bg: #fff;
+  --text: #111;
+  --muted: #6b6b6b;
+  --line: #dcdcdc;
+  --accent: #7d2115;
+  --on-accent: #fff;
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101010;
+    --text: #f1f1f1;
+    --muted: #9b9b9b;
+    --line: #333;
+    --accent: #e39a86;
+    --on-accent: #101010;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 19px/1.5 var(--serif);
+}
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+h1, h2 { font-weight: 400; line-height: 1.15; }
+h1 { font-size: clamp(2.2rem, 5vw, 3rem); margin: 0 0 2rem; }
+h2 { font-size: 1.5rem; margin: 4rem 0 1rem; }
+
+/* Small capitals carry every label on the site */
+nav, .quote .speaker, .biz-who > a, .deck-hint, .roll h2, .crumbs {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.07em;
+}
+
+.wrap { max-width: 60rem; margin: 0 auto; padding: 0 1rem; }
+.visually-hidden, .skip:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.skip:focus { position: absolute; top: 0; left: 0; background: var(--bg); padding: 0.5rem 1rem; z-index: 10; }
+main.wrap { padding-top: 4rem; }
+
+/* Header / footer */
+.site-header { border-bottom: 1px solid var(--line); }
+.site-header .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.25rem 2rem; padding-block: 1rem; }
+.brand { font-size: 1.3rem; }
+nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+nav a[aria-current] { color: var(--accent); }
+.site-footer { margin-top: 6rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding-block: 1rem 2rem; }
+.site-footer p { margin: 0; }
+.sample-banner { margin: 0; padding: 0.25rem 1rem; text-align: center; font-size: 0.85rem; border-bottom: 1px solid var(--line); }
+
+/* Search */
+.search { margin: 0 0 1rem; }
+.search input {
+  width: 100%; font: inherit; padding: 0.5rem 0; border: 0; border-bottom: 1px solid var(--text); border-radius: 0;
+  background: transparent; color: inherit; appearance: none;
+}
+.search input:focus { outline: 0; border-bottom-color: var(--accent); }
+.count, .empty { color: var(--muted); font-size: 0.9rem; }
+.lede { max-width: 38rem; }
+
+/* Quotes: attribution in the margin, the words in the main column */
+.quote-list { border-top: 1px solid var(--line); }
+.quote {
+  margin: 0; padding: 2rem 0; border-bottom: 1px solid var(--line);
+  display: grid; grid-template-columns: 13rem minmax(0, 1fr); column-gap: 3rem; row-gap: 0.75rem;
+}
+.quote[hidden] { display: none; }
+.quote figcaption { grid-column: 1; grid-row: 1 / span 2; display: flex; flex-direction: column; font-size: 0.95rem; line-height: 1.3; }
+.quote blockquote { grid-column: 2; margin: 0; }
+.quote blockquote p { margin: 0; font-size: 1.3rem; line-height: 1.4; max-width: 38rem; }
+.quote .speaker { color: var(--accent); font-size: 1.1rem; }
+.quote .source { color: var(--muted); font-style: italic; overflow-wrap: anywhere; margin-top: 0.15rem; }
+.quote cite { font-style: inherit; }
+.quote .tags { grid-column: 2; }
+
+/* Tags */
+.tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0 1rem; font-size: 0.9rem; font-style: italic; color: var(--muted); }
+.tags-lg { font-size: 1.1rem; color: inherit; }
+.tags-lg span { color: var(--muted); }
+
+/* Index pages */
+.index-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+.index-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+.index-list .n { color: var(--muted); font-size: 0.9rem; font-style: italic; }
+.crumbs { margin-bottom: 1rem; color: var(--muted); }
+
+/* Prose */
+.prose { max-width: 38rem; }
+.prose a { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+.prose h2 { margin-top: 2.5rem; }
+.prose li { margin-bottom: 0.25em; }
+
+/* Home: the quote of the day as a business card. Without JS (or with reduced
+   motion) it stays flat; deck.js makes it flip as you scroll. */
+.deck-section { margin-top: -4rem; }
+.deck-section > .biz-card { margin: 4rem auto 0; }
+.biz-card, .biz-face {
+  container-type: inline-size;
+  width: min(100%, 34rem, 130svh);
+  aspect-ratio: 7 / 4;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.07);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8%;
+}
+.biz-quote { margin: 0; font-size: clamp(1.05rem, 5cqw, 1.6rem); line-height: 1.3; text-align: center; }
+.biz-who { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-align: center; }
+.biz-who > a { font-size: clamp(1.1rem, 4.6cqw, 1.5rem); }
+.biz-who span { font-size: 0.9rem; font-style: italic; opacity: 0.8; overflow-wrap: anywhere; }
+.biz-card .biz-who { margin-top: 1rem; }
+
+.deck-stage { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; perspective: 1600px; }
+.biz-flip { position: relative; width: min(100%, 34rem, 130svh); aspect-ratio: 7 / 4; transform-style: preserve-3d; will-change: transform; }
+.biz-face { position: absolute; inset: 0; width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.biz-back { transform: rotateY(180deg); background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.deck-hint { position: absolute; bottom: 5rem; margin: 0; color: var(--muted); }
+
+.after { max-width: 34rem; margin: 4rem auto 5rem; text-align: center; }
+.statement { font-style: italic; font-size: clamp(2rem, 5vw, 2.8rem); margin: 0 0 2rem; }
+
+/* Home: every name in the archive */
+.roll { margin-top: 5rem; }
+.roll h2 { font-size: 1.1rem; color: var(--muted); margin: 0 0 1rem; }
+.roll-names { margin: 0; font-size: 1.15rem; line-height: 1.6; }
+.roll-names span { color: var(--muted); }
+
+@media (max-width: 40rem) {
+  .quote { grid-template-columns: minmax(0, 1fr); }
+  .quote figcaption, .quote blockquote, .quote .tags { grid-column: 1; grid-row: auto; }
+  .quote blockquote { order: -1; }
+}

@@ -1,0 +1,52 @@
+---
+permalink: /
+---
+{% extends "base.njk" %}
+{% from "quote.njk" import quoteCard %}
+{% block content %}
+<h1 class="visually-hidden">What mathematicians say about doing mathematics</h1>
+
+{%- if archive.featured %}
+{%- set q = archive.featured %}
+<section class="deck-section" id="deck" aria-label="Quote of the day">
+  <div class="biz-card">
+    <p class="biz-quote">{{ q.text }}</p>
+    <p class="biz-who">
+      <a href="/speakers/{{ q.speaker.slug }}/">{{ q.speaker.name }}</a>
+      {%- if q.source_title %}
+      <span>{% if q.source_url %}<a href="{{ q.source_url }}" rel="nofollow noopener">{{ q.source_title }}</a>{% else %}{{ q.source_title }}{% endif %}</span>
+      {%- endif %}
+    </p>
+  </div>
+</section>
+<script src="/assets/deck.js" defer></script>
+{%- endif %}
+
+<section class="after">
+  <h2 class="statement">Mathematics, in their own words.</h2>
+  <form class="search" action="/quotes/" role="search">
+    <label class="visually-hidden" for="home-q">Search quotes</label>
+    <input id="home-q" name="q" type="search" placeholder="Search">
+  </form>
+</section>
+
+<div class="quote-list">
+  {%- for quote in archive.quotes | reverse %}{% if quote.id != archive.featured.id %}{{ quoteCard(quote) }}{% endif %}{% endfor %}
+</div>
+
+<section class="roll">
+  <h2>Index of names</h2>
+  <p class="roll-names">
+    {%- for s in archive.speakers %}<a href="/speakers/{{ s.slug }}/">{{ s.name }}</a>{% if not loop.last %} <span aria-hidden="true">·</span> {% endif %}{% endfor %}
+  </p>
+</section>
+
+{%- if archive.tags.length %}
+<section>
+  <h2>Explore by topic</h2>
+  <ul class="tags tags-lg">
+    {%- for t in archive.tags %}<li><a href="/topics/{{ t.slug }}/">{{ t.name }} <span>{{ t.quotes.length }}</span></a></li>{% endfor %}
+  </ul>
+</section>
+{%- endif %}
+{% endblock %}

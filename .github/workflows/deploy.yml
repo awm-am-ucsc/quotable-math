@@ -1,0 +1,62 @@
+name: Sync sheet and deploy
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 13 * * *" # daily, ~6am Pacific
+  workflow_dispatch:
+    inputs:
+      import:
+        description: "Import the Google Sheet into Turso before building"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Runs on the daily schedule and on manual runs (unless unticked), not on plain pushes.
+      - name: Import Google Sheet into Turso
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.import)
+        run: npm run import
+        env:
+          SHEET_URL: ${{ secrets.SHEET_URL }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_WRITE_TOKEN }}
+
+      - name: Build site
+        run: npm run build
+        env:
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_READ_TOKEN }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

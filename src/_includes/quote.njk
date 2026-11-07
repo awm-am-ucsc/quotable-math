@@ -1,0 +1,30 @@
+{%- macro quoteCard(q, showSpeaker=true) -%}
+<figure class="quote" id="q-{{ q.id }}" data-search="{{ (q.text + ' ' + (q.speaker.name if q.speaker else '') + ' ' + (q.source_title or '') + ' ' + (q.tags | join(' ', 'name'))) | lower }}">
+  <blockquote><p>{{ q.text }}</p></blockquote>
+  <figcaption>
+    {%- if showSpeaker %}{% if q.speaker %}<a class="speaker" href="/speakers/{{ q.speaker.slug }}/">{{ q.speaker.name }}</a>{% else %}<span class="speaker">Unknown speaker</span>{% endif %}{% endif %}
+    {%- if q.source_title or q.date %}
+    <span class="source">
+      {%- if q.source_title -%}
+        {%- if q.source_url %}<a href="{{ q.source_url }}" rel="nofollow noopener"><cite>{{ q.source_title }}</cite></a>{% else %}<cite>{{ q.source_title }}</cite>{% endif -%}
+        {%- if q.locator %}, {{ q.locator }}{% endif -%}
+      {%- endif -%}
+      {%- if q.date %}{% if q.source_title %} · {% endif %}{{ q.date }}{% endif -%}
+    </span>
+    {%- endif %}
+  </figcaption>
+  {%- if q.tags.length %}
+  <ul class="tags" aria-label="Topics">
+    {%- for t in q.tags %}<li><a href="/topics/{{ t.slug }}/">{{ t.name }}</a></li>{% endfor %}
+  </ul>
+  {%- endif %}
+</figure>
+{%- endmacro %}
+
+{%- macro quoteJson(q, url) -%}
+{ "@type": "Quotation", "text": {{ q.text | json | safe }}, "url": {{ (url + "#q-" + q.id) | json | safe }}
+  {%- if q.speaker %}, "creator": { "@type": "Person", "name": {{ q.speaker.name | json | safe }} }{% endif %}
+  {%- if q.source_title %}, "isPartOf": { "@type": "CreativeWork", "name": {{ q.source_title | json | safe }}{% if q.source_url %}, "url": {{ q.source_url | json | safe }}{% endif %} }{% endif %}
+  {%- if q.date %}, "dateCreated": {{ q.date | json | safe }}{% endif %}
+  {%- if q.tags.length %}, "keywords": {{ q.tags | join(", ", "name") | json | safe }}{% endif %} }
+{%- endmacro %}

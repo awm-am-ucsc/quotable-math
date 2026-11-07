@@ -1,0 +1,30 @@
+---
+pagination:
+  data: archive.speakers
+  size: 1
+  alias: speaker
+permalink: "/speakers/{{ speaker.slug }}/"
+eleventyComputed:
+  title: "Quotes by {{ speaker.name }}"
+  description: "{{ speaker.quotes.length }} {{ 'quote' if speaker.quotes.length == 1 else 'quotes' }} by {{ speaker.name }} about mathematics, including: “{{ speaker.quotes[0].text | truncate(110) }}”"
+---
+{% extends "base.njk" %}
+{% from "quote.njk" import quoteCard, quoteJson %}
+{% block jsonld %}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "ProfilePage", "url": {{ (site.url + page.url) | json | safe }},
+  "mainEntity": { "@type": "Person", "name": {{ speaker.name | json | safe }}
+    {%- if speaker.bio %}, "description": {{ speaker.bio | json | safe }}{% endif %}
+    {%- if speaker.wikipedia_url %}, "sameAs": [{{ speaker.wikipedia_url | json | safe }}]{% endif %} },
+  "hasPart": [{% for q in speaker.quotes %}{{ quoteJson(q, site.url + page.url) }}{% if not loop.last %},{% endif %}{% endfor %}] }
+</script>
+{% endblock %}
+{% block content %}
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/speakers/">People</a> /</nav>
+<h1>Quotes by {{ speaker.name }}</h1>
+{%- if speaker.bio %}<p class="lede">{{ speaker.bio }}</p>{% endif %}
+{%- if speaker.wikipedia_url %}<p><a href="{{ speaker.wikipedia_url }}">Wikipedia</a></p>{% endif %}
+<div class="quote-list">
+  {%- for q in speaker.quotes %}{{ quoteCard(q, false) }}{% endfor %}
+</div>
+{% endblock %}

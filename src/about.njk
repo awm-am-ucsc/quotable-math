@@ -1,0 +1,30 @@
+---
+permalink: /about/
+title: About the project
+description: Quotable Math is a quote archive project by the Association for Women in Mathematics, Applied Math chapter at UC Santa Cruz.
+---
+{% extends "base.njk" %}
+{% block content %}
+<article class="prose">
+  <h1>About Quotable Math</h1>
+  <p class="lede">Most math quotes you'll find online come from men, and many quotes by women are about the obstacles they faced rather than their love of the subject. We're working to change that.</p>
+
+  <p>Quotable Math is a project of the {{ site.org }}. At weekly meetings, members dig through interviews, podcasts, talks, books and papers to find what mathematicians and STEM practitioners actually say about their work. We focus on women and underrepresented voices. Each quote is logged with its source and published here so anyone can find it.</p>
+
+  <p>The project was inspired by Ben Orlin's <em>Quotable Mathematics</em> event at MathFest 2024 and by UCSC's Wiki-a-thon to support BIPOC Scientists and Engineers.</p>
+
+  <h2>Why it matters</h2>
+  <ul>
+    <li><strong>Role models.</strong> It helps to see someone further along and think “that could be me.”</li>
+    <li><strong>Math is alive.</strong> Hearing people talk about how they work makes a “dry” subject feel rich, active and human.</li>
+    <li><strong>Careers.</strong> Applied math leads to many kinds of work; the people quoted here show some of them.</li>
+    <li><strong>Joy.</strong> Math is fun. Celebrating people who love math celebrates mathematics too.</li>
+  </ul>
+
+  <h2>How we cite</h2>
+  <p>We aim to link each quote to where it was said or written: a book with a page number, an interview, or a talk with a timestamp. Some entries are still waiting on a better source. We record personal identity only when the person has described it themselves, and we don't display it on the site.</p>
+
+  <h2 id="contribute">Suggest a quote or a correction</h2>
+  <p>Found a great quote, or spotted a mistake? <a href="{{ site.repo }}/issues/new">Open an issue on GitHub</a> with the quote, who said it and where. Students at UCSC are welcome to join our weekly meetings, no experience needed (and there are snacks).</p>
+</article>
+{% endblock %}

@@ -1,0 +1,25 @@
+---
+pagination:
+  data: archive.tags
+  size: 1
+  alias: tag
+permalink: "/topics/{{ tag.slug }}/"
+eleventyComputed:
+  title: "Quotes about {{ tag.name }}"
+  description: "{{ tag.quotes.length }} {{ 'quote' if tag.quotes.length == 1 else 'quotes' }} about {{ tag.name }} from mathematicians and STEM practitioners, highlighting women and underrepresented voices."
+---
+{% extends "base.njk" %}
+{% from "quote.njk" import quoteCard, quoteJson %}
+{% block jsonld %}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "CollectionPage", "name": {{ ("Quotes about " + tag.name) | json | safe }}, "url": {{ (site.url + page.url) | json | safe }},
+  "hasPart": [{% for q in tag.quotes %}{{ quoteJson(q, site.url + page.url) }}{% if not loop.last %},{% endif %}{% endfor %}] }
+</script>
+{% endblock %}
+{% block content %}
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/topics/">Topics</a> /</nav>
+<h1>Quotes about {{ tag.name }}</h1>
+<div class="quote-list">
+  {%- for q in tag.quotes %}{{ quoteCard(q) }}{% endfor %}
+</div>
+{% endblock %}

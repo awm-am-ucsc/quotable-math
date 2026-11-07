@@ -1,0 +1,22 @@
+{
+  "name": "quotable-math",
+  "version": "1.0.0",
+  "description": "A searchable, cited archive of quotes about doing mathematics, highlighting women and underrepresented mathematicians. Built by the Association for Women in Mathematics, Applied Math chapter at UCSC.",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "db:init": "node scripts/init-db.js",
+    "db:reset": "node scripts/reset-db.js",
+    "import": "node scripts/import-sheet.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.7",
+    "@libsql/client": "^0.18.0",
+    "csv-parse": "^7.0.3"
+  },
+  "private": true
+}

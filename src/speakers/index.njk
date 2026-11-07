@@ -1,0 +1,14 @@
+---
+permalink: /speakers/
+title: Mathematicians and STEM practitioners
+description: Quotes by women mathematicians and underrepresented voices in math and STEM, organized by person.
+---
+{% extends "base.njk" %}
+{% block content %}
+<h1>People</h1>
+<ul class="index-list">
+  {%- for s in archive.speakers %}
+  <li><a href="/speakers/{{ s.slug }}/">{{ s.name }}</a> <span class="n">{{ s.quotes.length }} {{ "quote" if s.quotes.length == 1 else "quotes" }}</span></li>
+  {%- endfor %}
+</ul>
+{% endblock %}

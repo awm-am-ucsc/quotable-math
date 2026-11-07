@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- set pageTitle = (title + " | " + site.title) if title else (site.title + ": " + site.tagline) %}
+  {%- set pageDescription = description or site.description %}
+  {%- set canonical = site.url + page.url %}
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ pageDescription }}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDescription }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <link rel="stylesheet" href="/assets/style.css">
+  {%- block jsonld %}{% endblock %}
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">{{ site.title }}</a>
+      <nav aria-label="Main">
+        <a href="/quotes/" {% if page.url == "/quotes/" %}aria-current="page"{% endif %}>All quotes</a>
+        <a href="/speakers/" {% if page.url.startsWith("/speakers/") %}aria-current="page"{% endif %}>People</a>
+        {%- if archive.tags.length %}
+        <a href="/topics/" {% if page.url.startsWith("/topics/") %}aria-current="page"{% endif %}>Topics</a>
+        {%- endif %}
+        <a href="/about/" {% if page.url == "/about/" %}aria-current="page"{% endif %}>About</a>
+      </nav>
+    </div>
+  </header>
+  {%- if archive.isSample %}
+  <p class="sample-banner">Preview: showing sample data. Add Turso credentials to build from the real archive.</p>
+  {%- endif %}
+  <main id="main" class="wrap">
+    {% block content %}{{ content | safe }}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>A project of the {{ site.org }}.</p>
+      <p><a href="/about/#contribute">Suggest a quote</a> · <a href="{{ site.repo }}">Source on GitHub</a></p>
+    </div>
+  </footer>
+</body>
+</html>

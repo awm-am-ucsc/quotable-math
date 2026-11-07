@@ -1,0 +1,17 @@
+---
+# Paginating means no page is written while the archive has no topics.
+pagination:
+  data: archive.tags
+  size: 10000
+  alias: allTags
+permalink: /topics/
+title: Math quotes by topic
+description: Quotes about mathematics organized by topic, from research life and teaching to applied math, by women and underrepresented mathematicians.
+---
+{% extends "base.njk" %}
+{% block content %}
+<h1>Topics</h1>
+<ul class="tags tags-lg">
+  {%- for t in archive.tags %}<li><a href="/topics/{{ t.slug }}/">{{ t.name }} <span>{{ t.quotes.length }}</span></a></li>{% endfor %}
+</ul>
+{% endblock %}

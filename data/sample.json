@@ -1,0 +1,18 @@
+{
+  "_note": "Preview data used only when Turso credentials are missing. It is never imported into the database.",
+  "speakers": [
+    { "slug": "ada-lovelace", "name": "Ada Lovelace", "bio": "English mathematician who wrote what is often called the first published computer program.", "wikipedia_url": "https://en.wikipedia.org/wiki/Ada_Lovelace" },
+    { "slug": "emmy-noether", "name": "Emmy Noether", "bio": "German mathematician whose work shaped abstract algebra and theoretical physics.", "wikipedia_url": "https://en.wikipedia.org/wiki/Emmy_Noether" },
+    { "slug": "maryam-mirzakhani", "name": "Maryam Mirzakhani", "bio": "Iranian mathematician and the first woman to win the Fields Medal (2014).", "wikipedia_url": "https://en.wikipedia.org/wiki/Maryam_Mirzakhani" }
+  ],
+  "tags": [
+    { "slug": "beauty", "name": "beauty" },
+    { "slug": "computing", "name": "computing" },
+    { "slug": "research-life", "name": "research life" }
+  ],
+  "quotes": [
+    { "id": "sample0001", "text": "The beauty of mathematics only shows itself to more patient followers.", "speaker_slug": "maryam-mirzakhani", "source_title": "Interview, Clay Mathematics Institute Annual Report", "source_url": null, "locator": null, "date": "2008", "tags": ["beauty", "research-life"] },
+    { "id": "sample0002", "text": "We may say most aptly that the Analytical Engine weaves algebraical patterns just as the Jacquard-loom weaves flowers and leaves.", "speaker_slug": "ada-lovelace", "source_title": "Notes on the Analytical Engine, Note A", "source_url": null, "locator": null, "date": "1843", "tags": ["computing", "beauty"] },
+    { "id": "sample0003", "text": "My methods are really methods of working and thinking; this is why they have crept in everywhere anonymously.", "speaker_slug": "emmy-noether", "source_title": "Letter to Helmut Hasse", "source_url": null, "locator": null, "date": "1931", "tags": ["research-life"] }
+  ]
+}
